@@ -17,16 +17,11 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "movies.db"
-        ).build()
-    }
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(context, AppDatabase::class.java, "movies.db")
+            .fallbackToDestructiveMigration(dropAllTables = true)
+            .build()
 
     @Provides
-    fun provideMovieDao(database: AppDatabase): MovieDao {
-        return database.movieDao()
-    }
+    fun provideMovieDao(database: AppDatabase): MovieDao = database.movieDao()
 }
