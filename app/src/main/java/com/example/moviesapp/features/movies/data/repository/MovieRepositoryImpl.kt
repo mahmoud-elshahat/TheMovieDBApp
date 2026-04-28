@@ -22,6 +22,10 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMovieById(movieId: Int): Movie? {
+        return movieDao.getMovieById(movieId)?.toMovie()
+    }
+
     override suspend fun fetchAndCacheNowPlayingMovies(page: Int): Result<Unit> {
         return try {
             val response = apiService.getNowPlaying(
