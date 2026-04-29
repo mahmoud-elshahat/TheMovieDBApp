@@ -1,6 +1,5 @@
 package com.example.moviesapp.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,32 +11,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Amber80,
+    onPrimary = Navy10,
+    primaryContainer = Navy30,
+    onPrimaryContainer = Amber80,
+    secondary = Teal80,
+    onSecondary = Navy10,
+    background = Navy10,
+    onBackground = White,
+    surface = Navy20,
+    onSurface = White,
+    surfaceVariant = Navy30,
+    error = ErrorRed
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = Amber40,
+    onPrimary = White,
+    primaryContainer = Grey95,
+    onPrimaryContainer = Grey10,
+    secondary = Teal40,
+    onSecondary = White,
+    background = Grey95,
+    onBackground = Grey10,
+    surface = White,
+    onSurface = Grey10,
+    surfaceVariant = Grey95,
+    error = ErrorRed
 )
 
 @Composable
 fun MoviesAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false, // disabled so our cinematic palette is always used
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -45,7 +51,6 @@ fun MoviesAppTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
