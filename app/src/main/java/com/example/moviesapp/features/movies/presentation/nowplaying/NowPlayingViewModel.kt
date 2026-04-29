@@ -26,14 +26,11 @@ class NowPlayingViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    private val pagedMovies: Flow<PagingData<Movie>> =
-        repository.getNowPlayingMoviesPaged().cachedIn(viewModelScope)
-
     val movies: Flow<PagingData<Movie>> = _searchQuery
         .debounce(SEARCH_DEBOUNCE_MS)
         .distinctUntilChanged()
         .flatMapLatest { query ->
-            if (query.isBlank()) pagedMovies
+            if (query.isBlank()) repository.getNowPlayingMoviesPaged()
             else repository.searchCachedMovies(query)
         }
         .cachedIn(viewModelScope)

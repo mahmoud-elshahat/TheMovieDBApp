@@ -13,5 +13,5 @@ data class MovieEntity(
     val releaseDate: String?,
     val voteAverage: Double,
     val voteCount: Int,
-    val page: Int // Useful for resume logic mentioned in requirements
+    val page: Int
 )

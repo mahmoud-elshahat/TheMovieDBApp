@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.moviesapp.features.movies.domain.model.Movie
+import com.example.moviesapp.ui.theme.Amber80
 
 @Composable
 fun MovieItem(
@@ -47,7 +49,6 @@ fun MovieItem(
         )
     ) {
         Box {
-            // Poster image
             AsyncImage(
                 model = movie.posterUrl,
                 contentDescription = movie.title,
@@ -57,7 +58,6 @@ fun MovieItem(
                 contentScale = ContentScale.Crop
             )
 
-            // Gradient overlay at the bottom
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,7 +73,6 @@ fun MovieItem(
                     )
             )
 
-            // Rating badge — top right
             RatingBadge(
                 rating = movie.voteAverage,
                 modifier = Modifier
@@ -81,7 +80,6 @@ fun MovieItem(
                     .padding(8.dp)
             )
 
-            // Title + date at the bottom over gradient
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -110,6 +108,7 @@ fun MovieItem(
 
 @Composable
 private fun RatingBadge(rating: Double, modifier: Modifier = Modifier) {
+    val label = remember(rating) { String.format("%.1f", rating) }
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
@@ -121,11 +120,11 @@ private fun RatingBadge(rating: Double, modifier: Modifier = Modifier) {
         Icon(
             imageVector = Icons.Filled.Star,
             contentDescription = null,
-            tint = Color(0xFFFFD166),
+            tint = Amber80,
             modifier = Modifier.size(11.dp)
         )
         Text(
-            text = String.format("%.1f", rating),
+            text = label,
             color = Color.White,
             fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold

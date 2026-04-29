@@ -14,9 +14,6 @@ interface MovieDao {
     @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
     fun pagingSource(): PagingSource<Int, MovieEntity>
 
-    @Query("SELECT * FROM movies WHERE id = :movieId")
-    suspend fun getMovieById(movieId: Int): MovieEntity?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<MovieEntity>)
 

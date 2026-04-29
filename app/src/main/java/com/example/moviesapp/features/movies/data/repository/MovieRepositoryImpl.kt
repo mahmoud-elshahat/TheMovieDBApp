@@ -36,9 +36,6 @@ class MovieRepositoryImpl @Inject constructor(
                 PagingData.from(entities.map { it.toMovie() })
             }
 
-    override suspend fun getMovieById(movieId: Int): Movie? =
-        movieDao.getMovieById(movieId)?.toMovie()
-
     private companion object {
         const val PAGE_SIZE = 20
     }
