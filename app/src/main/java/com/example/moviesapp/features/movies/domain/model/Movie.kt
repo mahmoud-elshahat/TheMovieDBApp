@@ -1,5 +1,7 @@
 package com.example.moviesapp.features.movies.domain.model
 
+import java.io.Serializable
+
 data class Movie(
     val id: Int,
     val title: String,
@@ -9,4 +11,4 @@ data class Movie(
     val releaseDate: String?,
     val voteAverage: Double,
     val voteCount: Int
-)
+) : Serializable

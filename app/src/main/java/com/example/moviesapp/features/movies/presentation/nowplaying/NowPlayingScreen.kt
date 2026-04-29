@@ -55,7 +55,7 @@ private const val GRID_COLUMNS = 2
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NowPlayingScreen(
-    onMovieClick: (Int) -> Unit,
+    onMovieClick: (Movie) -> Unit,
     viewModel: NowPlayingViewModel = hiltViewModel()
 ) {
     val movies = viewModel.movies.collectAsLazyPagingItems()
@@ -140,7 +140,7 @@ fun NowPlayingScreen(
 private fun MoviesPagingGrid(
     movies: LazyPagingItems<Movie>,
     searchQuery: String,
-    onMovieClick: (Int) -> Unit,
+    onMovieClick: (Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
     when (val refresh = movies.loadState.refresh) {

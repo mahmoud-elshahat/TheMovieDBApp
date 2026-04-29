@@ -35,11 +35,11 @@ import com.example.moviesapp.features.movies.domain.model.Movie
 @Composable
 fun MovieItem(
     movie: Movie,
-    onMovieClick: (Int) -> Unit,
+    onMovieClick: (Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.clickable { onMovieClick(movie.id) },
+        modifier = modifier.clickable { onMovieClick(movie) },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
