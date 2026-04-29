@@ -22,7 +22,9 @@ class MovieRemoteMediator @Inject constructor(
 
     private val movieDao = database.movieDao()
 
-    override suspend fun initialize(): InitializeAction = InitializeAction.LAUNCH_INITIAL_REFRESH
+    override suspend fun initialize(): InitializeAction =
+        if ((movieDao.getMaxPage() ?: 0) > 0) InitializeAction.SKIP_INITIAL_REFRESH
+        else InitializeAction.LAUNCH_INITIAL_REFRESH
 
     override suspend fun load(
         loadType: LoadType,
@@ -31,7 +33,7 @@ class MovieRemoteMediator @Inject constructor(
         val page = when (loadType) {
             LoadType.REFRESH -> STARTING_PAGE
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
-            LoadType.APPEND -> (movieDao.getMaxPage() ?: STARTING_PAGE) + 1
+            LoadType.APPEND -> (movieDao.getMaxPage() ?: 0) + 1
         }
 
         return try {
