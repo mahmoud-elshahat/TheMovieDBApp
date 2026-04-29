@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM movies ORDER BY page ASC, id ASC")
+    @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
     fun pagingSource(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM movies WHERE id = :movieId")
@@ -26,6 +26,6 @@ interface MovieDao {
     @Query("SELECT MAX(page) FROM movies")
     suspend fun getMaxPage(): Int?
 
-    @Query("SELECT * FROM movies WHERE title LIKE :query ORDER BY page ASC, id ASC")
+    @Query("SELECT * FROM movies WHERE title LIKE :query ORDER BY releaseDate DESC")
     fun observeByTitle(query: String): Flow<List<MovieEntity>>
 }

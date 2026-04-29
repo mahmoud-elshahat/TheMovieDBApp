@@ -98,6 +98,10 @@ dependencies {
     implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.retrofit)
+    testImplementation(libs.retrofit.gson)
+    testImplementation(libs.okhttp.logging)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
