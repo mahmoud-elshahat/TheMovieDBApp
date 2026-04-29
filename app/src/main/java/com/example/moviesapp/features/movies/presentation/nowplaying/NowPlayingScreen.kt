@@ -24,12 +24,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
+import com.example.moviesapp.R
+import com.example.moviesapp.core.error.toUserMessageRes
 import com.example.moviesapp.features.movies.domain.model.Movie
 import com.example.moviesapp.features.movies.presentation.components.MovieItem
 
@@ -45,7 +48,7 @@ fun NowPlayingScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Now Playing") }) }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.now_playing_title)) }) }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -55,7 +58,7 @@ fun NowPlayingScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = viewModel::onSearchQueryChange,
-                placeholder = { Text("Search movies...") },
+                placeholder = { Text(stringResource(R.string.search_movies_hint)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,7 +85,7 @@ private fun MoviesPagingGrid(
     when (val refresh = movies.loadState.refresh) {
         is LoadState.Loading -> FullScreenLoader(modifier)
         is LoadState.Error -> FullScreenError(
-            message = refresh.error.localizedMessage ?: "Something went wrong",
+            message = stringResource(refresh.error.toUserMessageRes()),
             onRetry = movies::retry,
             modifier = modifier
         )
@@ -111,7 +114,7 @@ private fun LazyGridScope.appendLoadStateItem(movies: LazyPagingItems<Movie>) {
         is LoadState.Loading -> fullSpanItem { InlineLoader() }
         is LoadState.Error -> fullSpanItem {
             InlineError(
-                message = append.error.localizedMessage ?: "Failed to load more",
+                message = stringResource(append.error.toUserMessageRes()),
                 onRetry = movies::retry
             )
         }
@@ -142,7 +145,7 @@ private fun FullScreenError(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(text = message, color = MaterialTheme.colorScheme.error)
-            Button(onClick = onRetry) { Text("Retry") }
+            Button(onClick = onRetry) { Text(stringResource(R.string.action_retry)) }
         }
     }
 }
@@ -170,7 +173,7 @@ private fun InlineError(message: String, onRetry: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(text = message, color = MaterialTheme.colorScheme.error)
-            Button(onClick = onRetry) { Text("Retry") }
+            Button(onClick = onRetry) { Text(stringResource(R.string.action_retry)) }
         }
     }
 }

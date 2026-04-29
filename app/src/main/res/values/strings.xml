@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MoviesApp</string>
+
+    <!-- Now Playing screen -->
+    <string name="now_playing_title">Now Playing</string>
+    <string name="search_movies_hint">Search movies&#8230;</string>
+    <string name="action_retry">Retry</string>
+    <string name="failed_to_load_more">Failed to load more</string>
+
+    <!-- Error messages -->
+    <string name="error_no_connection">No internet connection. Please check your network and try again.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
 </resources>
