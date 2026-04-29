@@ -32,7 +32,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -42,7 +44,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.moviesapp.R
 import com.example.moviesapp.features.movies.domain.model.Movie
+import com.example.moviesapp.ui.theme.Amber80
 
 @Composable
 fun MovieDetailsScreen(
@@ -70,7 +74,7 @@ fun MovieDetailsScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = state.message,
+                        text = stringResource(state.messageRes),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -95,7 +99,6 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            // Hero image with gradient + title overlay
             Box {
                 AsyncImage(
                     model = movie.backdropUrl ?: movie.posterUrl,
@@ -106,7 +109,6 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                     contentScale = ContentScale.Crop
                 )
 
-                // Full gradient: transparent top → dark bottom
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -122,7 +124,6 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                         )
                 )
 
-                // Movie title over gradient
                 Text(
                     text = movie.title,
                     style = MaterialTheme.typography.headlineSmall,
@@ -134,7 +135,6 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                 )
             }
 
-            // Info chips row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,12 +149,12 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                 }
                 InfoChip(
                     icon = Icons.Default.Star,
-                    label = String.format("%.1f", movie.voteAverage),
-                    iconTint = Color(0xFFFFD166)
+                    label = remember(movie.voteAverage) { String.format("%.1f", movie.voteAverage) },
+                    iconTint = Amber80
                 )
                 InfoChip(
                     icon = Icons.Default.ThumbUp,
-                    label = "${movie.voteCount} votes"
+                    label = stringResource(R.string.vote_count_format, movie.voteCount)
                 )
             }
 
@@ -163,17 +163,16 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.surfaceVariant
             )
 
-            // Overview section
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Overview",
+                    text = stringResource(R.string.label_overview),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = movie.overview.ifBlank { "No overview available." },
+                    text = movie.overview.ifBlank { stringResource(R.string.label_no_overview) },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f),
                     lineHeight = MaterialTheme.typography.bodyMedium.lineHeight
@@ -183,7 +182,6 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // Floating back button over the image
         IconButton(
             onClick = onBackClick,
             modifier = Modifier
@@ -196,7 +194,7 @@ private fun MovieDetailsContent(movie: Movie, onBackClick: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.cd_back),
                 tint = Color.White,
                 modifier = Modifier.size(20.dp)
             )

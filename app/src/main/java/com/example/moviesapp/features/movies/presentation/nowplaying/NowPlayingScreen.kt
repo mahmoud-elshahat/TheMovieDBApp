@@ -84,7 +84,6 @@ fun NowPlayingScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            // Search bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = viewModel::onSearchQueryChange,
@@ -106,7 +105,7 @@ fun NowPlayingScreen(
                         IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
                             Icon(
                                 imageVector = Icons.Default.Clear,
-                                contentDescription = "Clear search",
+                                contentDescription = stringResource(R.string.cd_clear_search),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
@@ -250,13 +249,13 @@ private fun NoSearchResults(query: String, modifier: Modifier = Modifier) {
                 modifier = Modifier.size(48.dp)
             )
             Text(
-                text = "No results for \"$query\"",
+                text = stringResource(R.string.no_results_for_query, query),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Try a different title",
+                text = stringResource(R.string.no_results_suggestion),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
             )
