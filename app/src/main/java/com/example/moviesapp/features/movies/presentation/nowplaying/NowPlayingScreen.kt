@@ -166,7 +166,11 @@ private fun MoviesPagingGrid(
                         key = movies.itemKey { it.id }
                     ) { index ->
                         movies[index]?.let { movie ->
-                            MovieItem(movie = movie, onMovieClick = onMovieClick)
+                            MovieItem(
+                                movie = movie,
+                                onMovieClick = onMovieClick,
+                                modifier = Modifier.animateItem()
+                            )
                         }
                     }
                     appendLoadStateItem(movies)
